@@ -1,0 +1,45 @@
+﻿@page "/item"
+@using DotnetAppDemo.Web
+@using DotnetAppDemo.Web.ApiClient
+@attribute [StreamRendering(true)]
+@attribute [OutputCache(Duration = 5)]
+
+@inject ItemApiClient ItemApi
+
+<PageTitle>Item</PageTitle>
+
+<h1>Item</h1>
+
+<p>This component demonstrates showing data loaded from a backend API service.</p>
+
+@if (itens == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th aria-label="Temperature in Celsius">Nome</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in itens)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private ItemModel[]? itens;
+
+    protected override async Task OnInitializedAsync()
+    {
+        itens = await ItemApi.GetItemAsync();
+    }
+}

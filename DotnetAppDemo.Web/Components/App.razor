@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="app.css" />
+    <link rel="stylesheet" href="DotnetAppDemo.Web.styles.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <HeadOutlet />
+</head>
+
+<body>
+    <AuthorizeView>
+        <Authorized>
+            <Routes />
+            <script src="_framework/blazor.web.js"></script>
+        </Authorized>
+        <NotAuthorized>
+            <p>Você precisa <a href="@LoginUrl">fazer login</a>.</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</body>
+
+</html>
+
+@inject NavigationManager Navigation
+@inject IConfiguration Configuration
+
+@code {
+    private string LoginUrl => $"{Configuration["Keycloak:AuthorizationUrl"]}?client_id={Configuration["Keycloak:ClientId"]}&response_type=code&scope=openid&redirect_uri={Uri.EscapeDataString(Navigation.Uri)}";
+}
