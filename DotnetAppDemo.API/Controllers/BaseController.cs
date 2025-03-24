@@ -9,7 +9,9 @@ using Microsoft.Extensions.Logging;
 
 namespace DotnetAppDemo.API.Controllers
 {
+#if !DEBUG
     [Authorize]
+#endif
     [ApiController]
     [Route("api/[controller]")]
     public class BaseController<TModel>(IBaseService<TModel> service, ILogger logger) : Controller where TModel : BaseModel

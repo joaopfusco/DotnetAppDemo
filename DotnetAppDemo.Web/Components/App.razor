@@ -13,22 +13,8 @@
 </head>
 
 <body>
-    <AuthorizeView>
-        <Authorized>
-            <Routes />
-            <script src="_framework/blazor.web.js"></script>
-        </Authorized>
-        <NotAuthorized>
-            <p>Você precisa <a href="@LoginUrl">fazer login</a>.</p>
-        </NotAuthorized>
-    </AuthorizeView>
+    <Routes />
+    <script src="_framework/blazor.web.js"></script>
 </body>
 
 </html>
-
-@inject NavigationManager Navigation
-@inject IConfiguration Configuration
-
-@code {
-    private string LoginUrl => $"{Configuration["Keycloak:AuthorizationUrl"]}?client_id={Configuration["Keycloak:ClientId"]}&response_type=code&scope=openid&redirect_uri={Uri.EscapeDataString(Navigation.Uri)}";
-}

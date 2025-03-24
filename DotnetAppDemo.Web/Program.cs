@@ -1,6 +1,5 @@
 using DotnetAppDemo.Web.ApiClient;
 using DotnetAppDemo.Web.Components;
-using Microsoft.AspNetCore.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,9 +22,6 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
 }
-
-app.UseAuthentication();
-app.UseAuthorization();
 
 app.UseStaticFiles();
 app.UseAntiforgery();
