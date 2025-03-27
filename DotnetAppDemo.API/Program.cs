@@ -7,6 +7,7 @@ using DotnetAppDemo.Service.Interfaces;
 using DotnetAppDemo.Service.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.OData;
+using Microsoft.AspNetCore.OData.NewtonsoftJson;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
@@ -36,7 +37,17 @@ builder.Services
     {
         opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-    });
+    })
+    .AddOData(opt => opt.Select()
+        .Expand()
+        .SetMaxTop(null)
+        .SkipToken()
+        .OrderBy()
+        .Count()
+        .Filter()
+        .EnableQueryFeatures(1000)
+    )
+    .AddODataNewtonsoftJson();
 
 builder.Services.AddEndpointsApiExplorer();
 
